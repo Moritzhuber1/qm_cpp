@@ -31,8 +31,7 @@ int main() {
     cin >> length;
     ParticleInABox partile_1; 
     float energies = partile_1.energie(length);
-    cout << energies << "  super sache"; 
-
+    cout << energies << "super sache\n"; 
     return 0;
 } 
 
