@@ -76,12 +76,10 @@ class ParticleInABox {
 			energy *= convert_unit(unit);
         	return energy;
     	}
-		
 
 		// variables with default values
-    	double length = 10e-9;
-    	double mass = 1.6735575*10e-27;   
-    	double h_bar = h/(2*M_PI);
+    	double length = 1e-9;
+    	double mass = 9.10938e-31;
 		int n = 1;
 		string unit = "J";
     
@@ -89,7 +87,7 @@ class ParticleInABox {
 
 		// set functions
 		void set_length(double new_length) {
-			length = new_length * 10e-9;
+			length = new_length * 1e-9;
 			print("New length is set to: ", round_to(new_length, 2), " nm");
 		}
 		void set_unit() {
@@ -118,6 +116,10 @@ class ParticleInABox {
 			}
 			print("The energy of the ", grade, " state of the particle is: ", energy, unit);
 		}
+		// wir brauchen noch:
+		// - get excitation energies
+		// - set particle type -> electron, proton, ...
+		//
 };
 
 // ====================================
@@ -126,12 +128,14 @@ class ParticleInABox {
 
 void print_starting_menu() {
 	vector<string> menu {
+		"",
 		"--------------------------------",
-		"Choose an option:",
+		"Main menu",
+		"--------------------------------",
 		" 1 - 'create a new particle'",
-		" 2 - 'interact with particle'",
-		" 3 - 'delete particle'",
-		" 4 - 'exit program'",
+		" 2 - 'interact with the particle'",
+		" 3 - 'delete the particle'",
+		" 4 - 'exit this program'",
 	};
 
 	for (int i = 0; i < menu.size(); i++) {
@@ -141,8 +145,10 @@ void print_starting_menu() {
 
 void print_particle_menu() {
 	vector<string> menu {
+		"",
 		"--------------------------------",
-		"Choose an option:",
+		"Interact with your particle ;)",
+		"--------------------------------",
 		" 0 - 'back to main menu'",
 		" 1 - 'set length of the box'",
 		" 2 - 'set unit of the energy'",
@@ -158,7 +164,7 @@ void particle_menu(ParticleInABox& particle) {
 	while (true) {
 		print_particle_menu();
 		int choice;
-		cout << "Your choice: ";
+		cout << "Enter a number: ";
 		cin >> choice;
 
 		if (choice == 0) {
@@ -175,6 +181,8 @@ void particle_menu(ParticleInABox& particle) {
 			cout << "Enter number of state: ";
 			cin >> n;
 			particle.get_energy(n);
+		} else {
+			err_msg("Invalid Input. Please try again");
 		}
 	}
 }
@@ -190,11 +198,10 @@ int main() {
 	// schlecht, falls man programm erweitern will
 	// um mehrere Objekte zu erlauben
 	unique_ptr<ParticleInABox> particle;
-	void particle_menu(ParticleInABox& particle);
 	while (true) {
 		int choice;
 		print_starting_menu();
-		cout << "Your choice: ";
+		cout << "Enter a number: ";
 		cin >> choice;
 
 		if (choice == 1) {
@@ -209,7 +216,9 @@ int main() {
 			if (!is_created) {err_msg("Particle has not been created yet. First create a particle");}
 			is_created = false;
 			particle.reset();
-		} else if (choice == 4) {break;}
+		} else if (choice == 4) {break;} else {
+			err_msg("Invalid Input. Please try again");
+		}
 	}
 
 	return 0;
