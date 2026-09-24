@@ -23,17 +23,13 @@ the RHF energy of any closed-shell molecule, starting with the **STO-3G** basis 
 6. **RHF SCF loop:** tested on H₂ and HeH⁺
 7. **Larger molecules:** H₂O, DIIS, comparison with PySCF
 
-## Build and run
- 
-Requires a C++20 compiler and CMake ≥ 3.20.
- 
+## Build
 ```bash
 cmake -S . -B build-debug -DCMAKE_BUILD_TYPE=Debug
 cmake --build build-debug && ./build-debug/hf
-``
+```
 
 ## References
 - A. Szabo, N. S. Ostlund, *Modern Quantum Chemistry*, Dover (1996)
 - T. Helgaker, P. Jørgensen, J. Olsen, *Molecular Electronic-Structure Theory*, Wiley (2000)
-
 
