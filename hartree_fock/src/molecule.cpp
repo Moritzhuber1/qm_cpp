@@ -13,6 +13,7 @@ namespace hf {
 // anonym namepsace, only visible in this .cpp file, in contra hf is public 
 namespace {
 
+constexpr double ANGSTROM_TO_BOHR = 1.8897261246;
 // index = atomic number
 const std::vector<std::string> ELEMENTS = {
     "X",
@@ -80,6 +81,46 @@ double nuclear_repulsion(const Molecule& mol)
     return energy;
 }
 
+Molecule read_xyz(const std::string& filename, int charge)
+{
+    std::ifstream in(filename);
+    if (!in) {
+        throw std::runtime_error("Cannot open file: '" + filename + "'");
+    }
+
+    std::size_t n_atoms{}; //read the atom number from file header 
+    if (!(in >> n_atoms)) {
+        throw std::runtime_error("Cannot read number of atoms in '" + filename + "'");
+    }
+
+    std::string line;
+    std::getline(in, line); // rest of line 1 
+    std::getline(in, line); // comment line 
+
+    Molecule mol;
+    mol.charge = charge;
+
+    for (std::size_t i = 0; i < n_atoms; ++i) {
+        
+        std::string symbol;
+        double x{}, y{}, z{};
+
+        if (!(in >> symbol >> x >> y >> z)) {
+            throw std::runtime_error("Cannot read atom " + std::to_string(i + 1) + " in '" + filename + "'");
+        }
+
+        const int Z = atomic_number(symbol);
+        const Vec3 pos_angstrom{x, y, z};
+        const Vec3 pos_bohr = ANGSTROM_TO_BOHR * pos_angstrom;
+
+        mol.atoms.push_back({Z, pos_bohr});
+
+
+    }
+
+    return mol;
+
+}
 
 
 } //namespace hf
