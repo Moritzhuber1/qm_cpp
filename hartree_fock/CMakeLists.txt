@@ -39,7 +39,10 @@ target_link_options(hf_options INTERFACE
 
 #from these data, the hf_lib library is build 
 # every addtional .cpp file is added here 
-add_library(hf_lib src/molecule.cpp)
+add_library(hf_lib 
+            src/molecule.cpp
+            src/shell.cpp
+            )
 
 
 # Add include/ to the header search path (-I flag), so code can write
