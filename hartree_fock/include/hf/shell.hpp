@@ -15,12 +15,19 @@ public:
 
     // constructor, building the object 
     Shell(Vec3 center, int l, std::vector<double> exponents,
-    std::vector<double> coefficients);
+        std::vector<double> coefficients);
     
-    const Vec3& center() const { return center_; }
-    int l() const { return l_; }
-    const std::vector<double>& exponents() const { return exponents_; }
-    const std::vector<double>& coefficients() const { return coefficients_; }
+    const Vec3& center() const { 
+        return center_; }
+
+    int l() const { 
+        return l_; }
+
+    const std::vector<double>& exponents() const { 
+        return exponents_; }
+        
+    const std::vector<double>& coefficients() const { 
+        return coefficients_; }
 
     std::size_t n_primitives() const {return exponents_.size(); }
     
